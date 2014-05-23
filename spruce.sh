@@ -1,16 +1,17 @@
 #!/bin/bash
+# Proof of concept showing that re-rolls can be *fast* without checking out all of core.
+
+
 ISSUEID='1920862'
 PATCH='1920862-51.patch'
 COMMENT_DATE_OF_PATCH='May 9, 2014 at 7:22pm'
 DRUPAL8_REPOSITORY='../Drupal_no_checkout'
 
+# Right now this assumes that I have a repository checked out
+# Under ../Drupal_no_checkout created with:
+# git clone http://git.drupal.org/project/drupal.git -n Drupal_no_checkout
 
-
-#echo $ISSUEID
-#echo $PATCH
-#echo $COMMENT_DATE_OF_PATCH
-
-
+# TODO: Take in arguments/Make it loop.
 
 # The -s options create a shared clone of the local repo
 # (it uses symlinks to the original .git in DRUPAL8_REPOSITORY
@@ -58,7 +59,6 @@ echo "Sparse Checkout"
   else
     echo "Automatic rebase success!"
   fi
-
 
 else
   echo "git apply Success - Patch Still Applies against current HEAD"
