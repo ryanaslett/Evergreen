@@ -8,10 +8,10 @@ to allow for extremely rapid, and automated rerolling of drupal patches.
 
 For now it requires that you set 4 variables in the script:
 
-*ISSUEID='1920862'
-*PATCH='1920862-51.patch'
-*COMMENT_DATE_OF_PATCH='May 9, 2014 at 7:22pm'
-*DRUPAL8_REPOSITORY='../Drupal_no_checkout'
+* ISSUEID='1920862'
+* PATCH='1920862-51.patch'
+* COMMENT_DATE_OF_PATCH='May 9, 2014 at 7:22pm'
+* DRUPAL8_REPOSITORY='../Drupal_no_checkout'
 
 It will attempt to apply the patch to HEAD first, then apply it to its last known good and attempt to rebase that onto head.
 
