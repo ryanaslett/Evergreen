@@ -1,7 +1,7 @@
 Evergreen
 =========
 
-Bash Script to rapidly reroll patches with mimnimal disk impact
+Bash Script to rapidly reroll patches with minimal disk impact
 
 This proof of concept leverages shared .git checkouts along with sparse checkouts
 to allow for extremely rapid, and automated rerolling of drupal patches.
