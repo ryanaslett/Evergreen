@@ -24,7 +24,7 @@ wget https://drupal.org/files/issues/${PATCH}
 
 # This reads the patch and checks out *only the files that have changed*
 # ignoring newly added files
-lsdiff --strip=1 -s ${PATCH} |grep -v ^\+|awk '{print $2}' |xargs git checkout HEAD
+lsdiff --strip=1 -s ${PATCH} |awk '!/^\+/ {print $2}' |xargs git checkout HEAD
 echo "applying patch"
 git apply ${PATCH}
 
@@ -46,7 +46,7 @@ echo "Sparse Checkout"
   echo "git create branch"
   git checkout -q -b issue-${ISSUEID}
   echo "git checkout the files"
-  lsdiff --strip=1 -s $PATCH |grep -v ^\+|awk '{print $2}' |xargs git checkout --
+  lsdiff --strip=1 -s $PATCH |awk '!/^\+/ {print $2}' |xargs git checkout --
   echo "applying patch,again"
   git apply ${PATCH}
   echo "adding files to the commit"
