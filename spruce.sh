@@ -2,9 +2,10 @@
 # Proof of concept showing that re-rolls can be *fast* without checking out all of core.
 
 
-ISSUEID='1920862'
-PATCH='1920862-51.patch'
-COMMENT_DATE_OF_PATCH='May 9, 2014 at 7:22pm'
+ISSUEID=$1
+COMMENT_DATE_OF_PATCH=$2
+PATCHURL=$3
+PATCH=$4
 DRUPAL8_REPOSITORY='../Drupal_no_checkout'
 
 # Right now this assumes that I have a repository checked out
@@ -20,7 +21,7 @@ DRUPAL8_REPOSITORY='../Drupal_no_checkout'
 echo "cloning"
 git clone -n -s -q ${DRUPAL8_REPOSITORY} issue_${ISSUEID}
 cd issue_${ISSUEID}
-wget https://drupal.org/files/issues/${PATCH}
+wget https://drupal.org/files${PATCHURL}
 
 # This reads the patch and checks out *only the files that have changed*
 # ignoring newly added files
@@ -55,11 +56,18 @@ echo "Sparse Checkout"
   git commit -m "${PATCH} applied"
   git rebase origin/HEAD
   if [ $? -ne 0 ]; then
-    echo "Automatic rebase failed - merge conflicts happened - use \'git mergetool\' to fix"
+    echo "RESULT: Automatic rebase failed - merge conflicts happened - use \'git mergetool\' to fix"
+    cd ..
+    mv issue_${ISSUEID} issue_${ISSUEID}_failed
   else
-    echo "Automatic rebase success!"
+    echo "RESULT: Automatic rebase success!"
+    git show HEAD > ${PATCH}_new
+    cd ..
+    mv issue_${ISSUEID} issue_${ISSUEID}_rebased
   fi
 
 else
-  echo "git apply Success - Patch Still Applies against current HEAD"
+  echo "RESULT: git apply Success - Patch Still Applies against current HEAD for ${ISSUEID}"
+    cd ..
+    mv issue_${ISSUEID} issue_${ISSUEID}_applies
 fi
